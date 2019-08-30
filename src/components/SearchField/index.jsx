@@ -7,25 +7,21 @@ import './styles.css';
 function SearchField() {
   const [searchText, setSearchText] = useState('');
   const [ships, setShips] = useState([]);
-  const [initSearch, setInitSearch] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!searchText) setShips([]);
+
       try {
         const results = await fetch(`http://localhost:4000/api/ships/${searchText}`);
         const data = await results.json();
         searchText && setShips(data);
-        setInitSearch(false);
       } catch (error) {
         new Error(error);
       }
     };
 
-    initSearch && fetchData();
-  }, [initSearch, searchText]);
-
-  useEffect(() => {
-    setShips([]);
+    fetchData();
   }, [searchText]);
 
   return (
@@ -36,7 +32,6 @@ function SearchField() {
         placeholder="Search"
         value={searchText}
         onChange={e => setSearchText(e.target.value)}
-        onKeyDown={e => e.keyCode === 13 && setInitSearch(true)}
       />
       <input
         type="button"
