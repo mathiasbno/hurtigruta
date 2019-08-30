@@ -1,10 +1,12 @@
 import React from 'react';
 
+import SearchField from './components/SearchField';
+
 function App() {
   return (
-    <p>
-      Edit <code>src/App.js</code> and save to reload.
-    </p>
+    <>
+      <SearchField />
+    </>
   );
 }
 
